@@ -83,11 +83,11 @@ rent_growth_rate = st.sidebar.slider("Annual Rent Growth Rate (%)", 0, 10, 3)
 time_horizon = st.sidebar.slider("🏁 Investment Time Horizon (Years)", 1, 30, 10)
 
 # 👤 Agent Information (always available; used for Agent Report tab)
-st.sidebar.header("👤 Agent Information")
-agent_name = st.sidebar.text_input("Agent Name")
-brokerage_name = st.sidebar.text_input("Brokerage Name")
-client_name = st.sidebar.text_input("Client Name")
-agent_notes = st.sidebar.text_area("Notes for Client")
+#st.sidebar.header("👤 Agent Information")
+#agent_name = st.sidebar.text_input("Agent Name")
+#brokerage_name = st.sidebar.text_input("Brokerage Name")
+#client_name = st.sidebar.text_input("Client Name")
+#agent_notes = st.sidebar.text_area("Notes for Client")
 
 # ================================
 # 🔢 RUN CALCULATIONS
@@ -469,6 +469,13 @@ and personalized notes. All property numbers come from the same inputs
 on the left; this tab just adds your branding.
 """
     )
+    # 🔹 Agent inputs (now only visible in this tab)
+    st.markdown("### 👤 Agent Information")
+
+    agent_name = st.text_input("Agent Name")
+    brokerage_name = st.text_input("Brokerage Name")
+    client_name = st.text_input("Client Name")
+    agent_notes = st.text_area("Notes for Client")
 
     # Generate Agent PDF using agent-specific fields
     agent_pdf_bytes = generate_agent_pdf(
