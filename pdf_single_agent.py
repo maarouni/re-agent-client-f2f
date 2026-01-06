@@ -12,6 +12,18 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from datetime import datetime
 
+def fmt_money(v):
+    try:
+        return f"${float(v):,.2f}"
+    except (TypeError, ValueError):
+        return "N/A"
+
+def fmt_pct(v):
+    try:
+        return f"{float(v):,.2f}%"
+    except (TypeError, ValueError):
+        return "N/A"
+
 
 # ==========================================================
 #  DYNAMIC NARRATIVE ENGINE FOR AGENT PDF
@@ -72,7 +84,7 @@ def generate_dynamic_executive_summary(metrics):
         "B": "strong overall profile with balanced risk and reward characteristics.",
         "C": "moderate performance typical of mid-market investment properties.",
         "D": "heightened sensitivity to leverage and market swings, best suited for experienced investors.",
-        "F": "a speculative scenario that may require restructuring or improvements to unlock value.",
+        "F": "speculative scenario that may require restructuring or improvements to unlock value.",
     }
 
     summary += f" Overall, this property represents a {grade_map.get(grade, 'moderate investment profile.')}"
@@ -303,21 +315,67 @@ def generate_pdf(
     elements.append(Paragraph("Key Decision Metrics", section_style))
 
     annual_rents = metrics.get("Annual Rents $ (by year)", [])
-    if isinstance(annual_rents, list) and len(annual_rents)>0:
-        projected_monthly_rent = annual_rents[-1]/12
+
+    # Year X follows the horizon slider because Annual Rents is year-by-year
+    if isinstance(annual_rents, list) and len(annual_rents) > 0:
+        year_x = len(annual_rents)
+        projected_monthly_rent = annual_rents[-1] / 12
     else:
-        projected_monthly_rent = "N/A"
+        year_x = None
+        projected_monthly_rent = None
+
+    # Pull CURRENT rent from property_data (must match what Streamlit passes in)
+    current_rent = (
+        property_data.get("expected_monthly_rent")
+        or property_data.get("monthly_rent")
+        or property_data.get("rent")
+    )
+    try:
+        current_rent = float(current_rent) if current_rent is not None else None
+    except (TypeError, ValueError):
+        current_rent = None
+
+    #curated = [
+        #("Monthly Cash Flow", metrics.get("First Year Cash Flow ($)", "N/A")),
+        #("Expected Annual Return", metrics.get("Final Year ROI (%)", "N/A")),
+        #("Monthly Cost vs Monthly Rent", metrics.get("Cash-on-Cash Return (%)", "N/A")),
+        #("Investment Grade", grade),
+
+        #("Current Rent Assumption (Today)",
+            #f"${current_rent:,.0f}" if current_rent is not None else "N/A"
+        #),
+
+        #(f"Estimated Rent in Year {year_x}" if year_x else "Estimated Rent (End of Period)",
+            #f"${projected_monthly_rent:,.0f}" if projected_monthly_rent is not None else "N/A"
+        #),
+    #]
+
+    # Prefer year_x from rent-by-year list; fallback to property_data time_horizon
+    fallback_year_x = property_data.get("time_horizon")
+    try:
+        fallback_year_x = int(fallback_year_x) if fallback_year_x is not None else None
+    except (TypeError, ValueError):
+        fallback_year_x = None
+
+    year_x = year_x or fallback_year_x  # reuse the year_x you computed above if present
+
+    monthly_cash_flow = metrics.get("First Year Cash Flow ($)", None)
+    final_year_roi = metrics.get("Final Year ROI (%)", None)
+    coc = metrics.get("Cash-on-Cash Return (%)", None)
 
     curated = [
-    ("Monthly Cash Flow", metrics.get("First Year Cash Flow ($)", "N/A")),
-    ("Expected Annual Return", metrics.get("Final Year ROI (%)", "N/A")),
-    ("Monthly Cost vs Monthly Rent", metrics.get("Cash-on-Cash Return (%)", "N/A")),
-    ("Investment Grade", grade),
-    ("Projected Monthly Rent",
-        f"${projected_monthly_rent:,.0f}" if projected_monthly_rent != "N/A" else "N/A"
-    ),
-    ]
+        ("Monthly Cash Flow ($)", fmt_money(monthly_cash_flow)),  # ✅ $ label
+        (f"Expected Return (%) — by Year {year_x}" if year_x else "Expected Return (%)",
+         fmt_pct(final_year_roi)),  # ✅ % label + Year X
+        ("Monthly Cost vs Monthly Rent (%)", fmt_pct(coc)),  # ✅ % label (even if name is imperfect)
+        ("Investment Grade", grade),
 
+        ("Current Rent Assumption (Today)",
+         f"${current_rent:,.0f}" if current_rent is not None else "N/A"),
+
+        (f"Estimated Rent in Year {year_x}" if year_x else "Estimated Rent (End of Period)",
+         f"${projected_monthly_rent:,.0f}" if projected_monthly_rent is not None else "N/A"),
+    ]
     table_data = [["Metric", "Value"]] + [[k, str(v)] for k, v in curated]
     table = Table(table_data, colWidths=[230, 230])
     table.setStyle(TableStyle([

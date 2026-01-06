@@ -114,6 +114,7 @@ property_data = {
     "rent_growth_rate": rent_growth_rate,
     "time_horizon": time_horizon
 }
+improvements_list = []
 
 # AI verdict once, shared by all tabs
 summary_text, grade = generate_ai_verdict(metrics)
@@ -279,6 +280,11 @@ with tab1:
 
         valid_df = improvements_df.dropna(subset=["Amount ($)"])
         valid_df = valid_df[valid_df["Amount ($)"] > 0]
+        # Always reset improvements_list so it never carries over from a prior run
+        if valid_df.empty:
+            improvements_list = []
+        else:
+            improvements_list = valid_df.to_dict(orient="records")
 
         total_cost = valid_df["Amount ($)"].sum()
         weighted_roi = (
@@ -297,7 +303,7 @@ with tab1:
             #if pd.notna(first_row["Amount ($)"]):
                 #improvement_cost = float(first_row["Amount ($)"])
         # ---- Send full list of improvements to the Agent PDF ----
-        improvements_list = valid_df.to_dict(orient="records")
+        #improvements_list = valid_df.to_dict(orient="records")
 
 
 # ===================================================================
