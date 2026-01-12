@@ -83,8 +83,8 @@ def generate_dynamic_executive_summary(metrics):
         "A": "low-risk, high-quality opportunity suitable for conservative and growth-oriented buyers alike.",
         "B": "strong overall profile with balanced risk and reward characteristics.",
         "C": "moderate performance typical of mid-market investment properties.",
-        "D": "heightened sensitivity to leverage and market swings, best suited for experienced investors.",
-        "F": "speculative scenario that may require restructuring or improvements to unlock value.",
+        "D": "property with higher monthly costs relative to income, making it more sensitive to financing terms and timing and potentially better suited for buyers with a longer hold horizon or lifestyle priorities beyond cash flow.",
+        "F": "property where the monthly cost is significantly above the projected income, best suited for buyers focused on long-term ownership and equity growth.",
     }
 
     summary += f" Overall, this property represents a {grade_map.get(grade, 'moderate investment profile.')}"
@@ -301,8 +301,16 @@ def generate_pdf(
         "A": "Excellent long-term income and appreciation potential.",
         "B": "Strong investment with solid cash flow and moderate risk.",
         "C": "Modest performance with tighter margins.",
-        "D": "Marginal upside with heightened risk sensitivity.",
-        "F": "Speculative profile with significant variability.",
+        "D": (
+            "Higher monthly costs relative to income make this property more sensitive "
+        "to financing terms and timing. It may be better suited for buyers with a "
+        "longer hold horizon or lifestyle priorities beyond cash flow."
+        ),    
+        "F": (
+            "The monthly cost is significantly above the projected income, so this "
+        "property is best suited for buyers focused on long-term ownership and "
+        "equity growth."
+        ),
     }
     suit = desc_map.get(grade, "General suitability assessment.")
 
