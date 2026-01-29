@@ -127,17 +127,26 @@ def generate_pdf(property_data, metrics, summary_text):
     elements.append(Paragraph("Real Estate Evaluator Report", styles["Title"]))
     elements.append(Spacer(1, 12))
 
-    # AI Verdict
-    elements.append(Paragraph("<b><font color='green'> AI Verdict</font></b>", styles["Heading3"]))
-    elements.append(Paragraph(summary_text, styles["Normal"]))
+    # Investment Summary
+    #elements.append(Paragraph("<b><font color='green'> AI Verdict</font></b>", styles["Heading3"]))
+    #elements.append(Paragraph(summary_text, styles["Normal"]))
+    #elements.append(Spacer(1, 12))
+    elements.append(Paragraph("<b>Investment Summary</b>", styles["Heading3"]))
+    # ✅ Pull the computed grade from metrics (set earlier by generate_ai_verdict)
+    grade = metrics.get("Grade", "N/A")
+    elements.append(Paragraph(
+        f"Based on the current assumptions, this property reflects a {grade}-grade investment profile, "
+        "offering positive cash flow, solid projected returns, and moderate risk over the stated time horizon.",
+        styles["Normal"]
+    ))
     elements.append(Spacer(1, 12))
 
     # AI Disclaimer
-    disclaimer_text = Paragraph(
-        '<font size="9" color="darkblue">(AI-generated grade based on estimated ROI, cash flow, and risk factors. Informational only.)</font>',
-        styles["Normal"]
-    )
-    elements.extend([disclaimer_text, Spacer(1, 12)])
+    #disclaimer_text = Paragraph(
+        #'<font size="9" color="darkblue">(AI-generated grade based on estimated ROI, cash flow, and risk factors. Informational only.)</font>',
+        #styles["Normal"]
+    #)
+    #elements.extend([disclaimer_text, Spacer(1, 12)])
 
      # Property & Mortgage Inputs
     elements.append(Paragraph("<b>🏠 Property & Loan Inputs</b>", styles["Heading3"]))
