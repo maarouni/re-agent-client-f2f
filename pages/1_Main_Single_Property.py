@@ -18,8 +18,8 @@ import numpy as np
 load_dotenv()
 
 st.set_page_config(page_title="Single Property Evaluator", layout="centered")
-st.title("🏡 Real Estate Deal Evaluator")
-st.markdown("Analyze the investment potential of a single property.")
+st.title("🏡 Home Affordability & Comfort Check")
+st.markdown("A simple way to understand long-term affordability and peace of mind.")
 
 # ===================================
 # 🔐 CLEAN PASSWORD GATE (No extra icons)
@@ -82,12 +82,6 @@ appreciation_rate = st.sidebar.slider("Annual Appreciation Rate (%)", 0, 10, 3)
 rent_growth_rate = st.sidebar.slider("Annual Rent Growth Rate (%)", 0, 10, 3)
 time_horizon = st.sidebar.slider("🏁 Investment Time Horizon (Years)", 1, 30, 10)
 
-# 👤 Agent Information (always available; used for Agent Report tab)
-#st.sidebar.header("👤 Agent Information")
-#agent_name = st.sidebar.text_input("Agent Name")
-#brokerage_name = st.sidebar.text_input("Brokerage Name")
-#client_name = st.sidebar.text_input("Client Name")
-#agent_notes = st.sidebar.text_area("Notes for Client")
 
 # ================================
 # 🔢 RUN CALCULATIONS
@@ -311,7 +305,7 @@ with tab1:
 # ===================================================================
 with tab2:
 
-    st.markdown("### 📊 Insights Dashboard")
+    st.markdown("### ✅ Buyer Comfort Check")
 
     # ---------------------------------------
     # 1️⃣ BREAK-EVEN ANALYSIS

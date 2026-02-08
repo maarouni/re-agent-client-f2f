@@ -63,7 +63,7 @@ if not st.session_state.authenticated:
 
 st.markdown("""
     <h1 style='text-align: center;'>🏡 Real Estate Investment Evaluator</h1>
-    <p style='text-align: center;'>Analyze single properties or compare two side-by-side with AI-enhanced metrics and cash flow projections.</p>
+    <p style='text-align: center;'>Analyze single properties or compare two side-by-side with metrics and cash flow projections.</p>
 """, unsafe_allow_html=True)
 
 # 👇 Option Cards for Navigation

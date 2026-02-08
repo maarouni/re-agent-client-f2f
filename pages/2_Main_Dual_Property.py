@@ -47,16 +47,16 @@ if not st.session_state.authenticated:
 
     
 # ✅ Titles shown only after succesful login
-st.markdown("## 🏡 Real Estate Deal Evaluator")
+st.markdown("## 🏡 Home Affordability & Comfort Check")
 #st.markdown("### 📈 Multi-Year Cash Flow Projection")
-st.header("🔄 Side-by-Side Deal Comparison")
+st.header("🔄 Side-by-Side Comparison")
 
 st.markdown(
-    "<p style='font-size:18px; color:white; font-weight:bold;'>🔍 Compare investment options side-by-side to optimize ROI, cash flow, and equity growth.</p>",
+    "<p style='font-size:18px; color:white; font-weight:bold;'>🔍 Compare two homes side-by-side to understand comfort, affordability, and long-term fit.</p>",
     unsafe_allow_html=True
 )
 st.markdown(
-    "<p style='font-size:18px; color:white; font-weight:bold;'>Input real numbers for Property A & B to model ROI, cash flow, and appreciation.</p>",
+    "<p style='font-size:18px; color:white; font-weight:bold;'>Input numbers for Property A & B.</p>",
     unsafe_allow_html=True
 )
 st.markdown("---")
