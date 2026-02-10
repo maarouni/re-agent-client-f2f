@@ -17,9 +17,9 @@ import numpy as np
 
 load_dotenv()
 
-st.set_page_config(page_title="Single Property Evaluator", layout="centered")
-st.title("🏡 Home Affordability & Comfort Check")
-st.markdown("A simple way to understand long-term affordability and peace of mind.")
+st.set_page_config(page_title="Home Ownership Cost & Comfort Check", layout="centered")
+st.title("🏡 Home Ownership Cost & Comfort Check")
+st.markdown("A simple way to understand long-term ownership costs and peace of mind.")
 
 # ===================================
 # 🔐 CLEAN PASSWORD GATE (No extra icons)
@@ -325,7 +325,7 @@ with tab2:
     # 2️⃣ ANNUAL INCOME ALLOCATION — Investor Preferred
     # ---------------------------------------
     st.markdown("### 🥧 Where Does the Rent Go?")
-    st.subheader("📊 Annual Income Allocation")
+    st.subheader("🧭 Annual Cost Breakdown")
 
     effective_rent = monthly_rent * (1 - vacancy_rate / 100.0)
 

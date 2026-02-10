@@ -17,7 +17,7 @@ load_dotenv()
 #from pdf_generator import generate_comparison_pdf_table_style
  #✅ Add this right below the imports — before any Streamlit UI code
 st.set_page_config(
-    page_title="Dual Property Comparison Evaluator",
+    page_title="Home Comparison — Cost & Comfort Check",
     page_icon="🏘️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -35,7 +35,7 @@ if "authenticated" not in st.session_state:
 
 # Show password input only if not yet authenticated
 if not st.session_state.authenticated:
-    st.title("🏘️ Dual Property Deal Evaluator")
+    st.title("🏘️ Home Comparison — Cost & Comfort Check")
     password = st.text_input("🔒 Please enter access password", type="password")
 
     if password == APP_PASSWORD:
@@ -47,16 +47,16 @@ if not st.session_state.authenticated:
 
     
 # ✅ Titles shown only after succesful login
-st.markdown("## 🏡 Home Affordability & Comfort Check")
+st.markdown("## 🏡 Home Ownership Cost & Comfort Check")
 #st.markdown("### 📈 Multi-Year Cash Flow Projection")
 st.header("🔄 Side-by-Side Comparison")
 
 st.markdown(
-    "<p style='font-size:18px; color:white; font-weight:bold;'>🔍 Compare two homes side-by-side to understand comfort, affordability, and long-term fit.</p>",
+    "<p style='font-size:18px; color:white; font-weight:bold;'>🔍 Compare two homes side-by-side to understand comfort, ownership costs, and long-term fit.</p>",
     unsafe_allow_html=True
 )
 st.markdown(
-    "<p style='font-size:18px; color:white; font-weight:bold;'>Input numbers for Property A & B.</p>",
+    "<p style='font-size:18px; color:white; font-weight:bold;'>Enter A & B inputs to compare cost and comfort.</p>",
     unsafe_allow_html=True
 )
 st.markdown("---")
